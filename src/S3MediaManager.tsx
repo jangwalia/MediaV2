@@ -10,14 +10,9 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 
 import ZoomImage from "./components/ZoomImage";
-import Menu from "@mui/material/Menu";
-import MenuList from "@mui/material/MenuList";
+
 import LoadingButton from "@mui/lab/LoadingButton";
 
-import FolderIcon from "@mui/icons-material/Folder";
-
-import ImageIcon from "@mui/icons-material/Image";
-import AddIcon from "@mui/icons-material/AddCircle";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import CloseIcon from "@mui/icons-material/CancelOutlined";
 
@@ -32,6 +27,8 @@ import SharedImagesButton from "./components/SharedImages";
 import PrivateImagesButton from "./components/PrivateImages";
 import NavigationSection from "./components/NavigationSection";
 import SearchImageButton from "./components/SearchImage";
+import AddImageButton from "./components/AddImage";
+import AddImageOptions from "./components/AddImageOptions";
 
 const MAX_FILES = 5;
 
@@ -275,44 +272,29 @@ const S3FileManagerComponent = (props: any) => {
           goHome={goHome}
           prevFolders={prevFolders}
         />
-       <SearchImageButton onClick={onSearch} />
+        <SearchImageButton onClick={onSearch} />
 
         {bucketConfig.canUpdate && (
           <>
-            {/* // TODO : create seperate compoenent for buttons for add start */}
-            <Button startIcon={<AddIcon />} onClick={handleOpenMenu}>
-              Add
-            </Button>
-            <Menu
+            <AddImageButton onClick={handleOpenMenu} />
+            <AddImageOptions
+              onClickFolder={() => {
+                setShowCreateFolder(true);
+                setShowUpload(false);
+                setShowSearch(false);
+                handleCloseMenu();
+              }}
+              onClickImages={() => {
+                setShowUpload(true);
+                setShowCreateFolder(false);
+                setShowSearch(false);
+                handleCloseMenu();
+              }}
+              handleCloseMenu={handleCloseMenu}
               id={id}
               anchorEl={anchorEl}
               open={open}
-              onClose={handleCloseMenu}
-            >
-              <div className="tw-p-4 tw-flex tw-flex-col">
-                <MenuList
-                  onClick={() => {
-                    setShowCreateFolder(true);
-                    setShowUpload(false);
-                    setShowSearch(false);
-                    handleCloseMenu();
-                  }}
-                >
-                  <Button startIcon={<FolderIcon />}>New Folder</Button>
-                </MenuList>
-                <MenuList
-                  onClick={() => {
-                    setShowUpload(true);
-                    setShowCreateFolder(false);
-                    setShowSearch(false);
-                    handleCloseMenu();
-                  }}
-                >
-                  <Button startIcon={<ImageIcon />}>New Images</Button>
-                </MenuList>
-              </div>
-            </Menu>
-            {/* // TODO : create seperate compoenent for buttons for add end */}
+            />
           </>
         )}
       </div>
