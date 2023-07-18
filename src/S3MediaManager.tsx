@@ -280,14 +280,12 @@ const S3FileManagerComponent = (props: any) => {
             <AddImageOptions
               onClickFolder={() => {
                 setShowCreateFolder(true);
-                setShowUpload(false);
-                setShowSearch(false);
+
                 handleCloseMenu();
               }}
               onClickImages={() => {
                 setShowUpload(true);
-                setShowCreateFolder(false);
-                setShowSearch(false);
+
                 handleCloseMenu();
               }}
               handleCloseMenu={handleCloseMenu}
