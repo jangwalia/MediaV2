@@ -21,13 +21,16 @@ import AddIcon from "@mui/icons-material/AddCircle";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import CloseIcon from "@mui/icons-material/CancelOutlined";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDropzone } from "react-dropzone";
 import S3FileManager from "./S3FileManager"; // Path to your S3FileManager class
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+import SharedImagesButton from "./components/SharedImages";
+import PrivateImagesButton from "./components/PrivateImages";
 
 const MAX_FILES = 5;
 
@@ -51,6 +54,9 @@ const S3FileManagerComponent = (props: any) => {
   const [prevFolders, setPrevFolders] = useState<string[]>([]);
   const [newFolderName, setNewFolderName] = useState("");
   const [bucketConfig, setBucketConfig] = useState(props.buckets["Private"]);
+  const [selectedButton, setSelectedButton] = useState('');
+
+
 
   const manager = new S3FileManager(bucketConfig.bucket, bucketConfig.region);
   const open = Boolean(anchorEl);
@@ -225,9 +231,10 @@ const S3FileManagerComponent = (props: any) => {
     console.log(
       "bucket",
       bucketConfig.bucket,
-      props.buckets[bucketName].bucket
+      props.buckets
     );
     setBucketConfig(props.buckets[bucketName]);
+    setSelectedButton(bucketName);
     setFiles([]);
     setFolders([]);
     setContinuationToken(null);
@@ -256,20 +263,8 @@ const S3FileManagerComponent = (props: any) => {
     <div className="tw-container tw-mx-auto">
       {/* <div className="tw-container tw-mx-auto tw-px-4 sm:tw-px-6 lg:tw-px-8"> */}
       <div className="tw-my-6 tw-w-auto">
-        <Button
-          startIcon={<FolderOpenIcon />}
-          color="primary"
-          onClick={() => switchBucket("Public")}
-        >
-          Shared Images
-        </Button>
-        <Button
-          startIcon={<FolderSharedIcon />}
-          color="primary"
-          onClick={() => switchBucket("Private")}
-        >
-          Private Images
-        </Button>
+       <SharedImagesButton selected = {selectedButton === 'Public'} onClick={() => switchBucket("Public")} />
+       <PrivateImagesButton selected = {selectedButton === 'Private'} onClick={() => switchBucket("Private")} />
       </div>
        {/* TODO: create seperate compoenent for buttons for switching buckets end */}
 
