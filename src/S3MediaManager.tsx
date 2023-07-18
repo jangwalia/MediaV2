@@ -13,14 +13,14 @@ import ZoomImage from "./components/ZoomImage";
 import Menu from "@mui/material/Menu";
 import MenuList from "@mui/material/MenuList";
 import LoadingButton from "@mui/lab/LoadingButton";
-import HomeIcon from "@mui/icons-material/Home";
+
 import FolderIcon from "@mui/icons-material/Folder";
-import FolderSharedIcon from "@mui/icons-material/FolderShared";
+
 import ImageIcon from "@mui/icons-material/Image";
 import AddIcon from "@mui/icons-material/AddCircle";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import CloseIcon from "@mui/icons-material/CancelOutlined";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDropzone } from "react-dropzone";
@@ -31,6 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import SharedImagesButton from "./components/SharedImages";
 import PrivateImagesButton from "./components/PrivateImages";
+import NavigationSection from "./components/NavigationSection";
 
 const MAX_FILES = 5;
 
@@ -265,14 +266,7 @@ const S3FileManagerComponent = (props: any) => {
 
       <div className="tw-flex tw-my-6">
         {/* // TODO : create seperate compoenent for buttons for navigation start */}
-        {prevFolders.length > 0 ? (
-          <Button onClick={navigateBack} startIcon={<ArrowBackIcon />}>
-            Back
-          </Button>
-        ) : null}
-        <Button startIcon={<HomeIcon />} onClick={goHome}>
-          Home
-        </Button>
+        <NavigationSection navigateBack={navigateBack} goHome={goHome} prevFolders={prevFolders} />
         <Button
           startIcon={<SearchIcon />}
           onClick={() => {
