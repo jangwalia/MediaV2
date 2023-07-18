@@ -8,7 +8,7 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
-import SearchIcon from "@mui/icons-material/Search";
+
 import ZoomImage from "./components/ZoomImage";
 import Menu from "@mui/material/Menu";
 import MenuList from "@mui/material/MenuList";
@@ -21,7 +21,6 @@ import AddIcon from "@mui/icons-material/AddCircle";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import CloseIcon from "@mui/icons-material/CancelOutlined";
 
-
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDropzone } from "react-dropzone";
 import S3FileManager from "./S3FileManager"; // Path to your S3FileManager class
@@ -32,6 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SharedImagesButton from "./components/SharedImages";
 import PrivateImagesButton from "./components/PrivateImages";
 import NavigationSection from "./components/NavigationSection";
+import SearchImageButton from "./components/SearchImage";
 
 const MAX_FILES = 5;
 
@@ -251,6 +251,11 @@ const S3FileManagerComponent = (props: any) => {
     listFiles();
   };
 
+  const onSearch = () => {
+    setShowUpload(false);
+    setShowCreateFolder(false);
+    setShowSearch(true);
+  };
   return (
     <div className="tw-container tw-mx-auto">
       <div className="tw-my-6 tw-w-auto">
@@ -265,19 +270,13 @@ const S3FileManagerComponent = (props: any) => {
       </div>
 
       <div className="tw-flex tw-my-6">
-        {/* // TODO : create seperate compoenent for buttons for navigation start */}
-        <NavigationSection navigateBack={navigateBack} goHome={goHome} prevFolders={prevFolders} />
-        <Button
-          startIcon={<SearchIcon />}
-          onClick={() => {
-            setShowUpload(false);
-            setShowCreateFolder(false);
-            setShowSearch(true);
-          }}
-        >
-          Search
-        </Button>
-        {/* // TODO : create seperate compoenent for buttons for navigation end */}
+        <NavigationSection
+          navigateBack={navigateBack}
+          goHome={goHome}
+          prevFolders={prevFolders}
+        />
+       <SearchImageButton onClick={onSearch} />
+
         {bucketConfig.canUpdate && (
           <>
             {/* // TODO : create seperate compoenent for buttons for add start */}
