@@ -34,8 +34,6 @@ import PrivateImagesButton from "./components/PrivateImages";
 
 const MAX_FILES = 5;
 
-
-
 const S3FileManagerComponent = (props: any) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [imageZoom, setImageZoom] = useState<boolean>(false);
@@ -54,9 +52,7 @@ const S3FileManagerComponent = (props: any) => {
   const [prevFolders, setPrevFolders] = useState<string[]>([]);
   const [newFolderName, setNewFolderName] = useState("");
   const [bucketConfig, setBucketConfig] = useState(props.buckets["Private"]);
-  const [selectedButton, setSelectedButton] = useState('');
-
-
+  const [selectedButton, setSelectedButton] = useState("");
 
   const manager = new S3FileManager(bucketConfig.bucket, bucketConfig.region);
   const open = Boolean(anchorEl);
@@ -228,11 +224,7 @@ const S3FileManagerComponent = (props: any) => {
   };
 
   const switchBucket = (bucketName: string) => {
-    console.log(
-      "bucket",
-      bucketConfig.bucket,
-      props.buckets
-    );
+    console.log("bucket", bucketConfig.bucket, props.buckets);
     setBucketConfig(props.buckets[bucketName]);
     setSelectedButton(bucketName);
     setFiles([]);
@@ -259,15 +251,17 @@ const S3FileManagerComponent = (props: any) => {
   };
 
   return (
-    // TODO: create seperate compoenent for buttons for switching buckets start
     <div className="tw-container tw-mx-auto">
-      {/* <div className="tw-container tw-mx-auto tw-px-4 sm:tw-px-6 lg:tw-px-8"> */}
       <div className="tw-my-6 tw-w-auto">
-       <SharedImagesButton selected = {selectedButton === 'Public'} onClick={() => switchBucket("Public")} />
-       <PrivateImagesButton selected = {selectedButton === 'Private'} onClick={() => switchBucket("Private")} />
+        <SharedImagesButton
+          selected={selectedButton === "Public"}
+          onClick={() => switchBucket("Public")}
+        />
+        <PrivateImagesButton
+          selected={selectedButton === "Private"}
+          onClick={() => switchBucket("Private")}
+        />
       </div>
-       {/* TODO: create seperate compoenent for buttons for switching buckets end */}
-
 
       <div className="tw-flex tw-my-6">
         {/* // TODO : create seperate compoenent for buttons for navigation start */}
@@ -292,7 +286,7 @@ const S3FileManagerComponent = (props: any) => {
         {/* // TODO : create seperate compoenent for buttons for navigation end */}
         {bucketConfig.canUpdate && (
           <>
-          {/* // TODO : create seperate compoenent for buttons for add start */}
+            {/* // TODO : create seperate compoenent for buttons for add start */}
             <Button startIcon={<AddIcon />} onClick={handleOpenMenu}>
               Add
             </Button>
@@ -482,7 +476,6 @@ const S3FileManagerComponent = (props: any) => {
               }
             />
           </ImageListItem>
-
         ))}
       </ImageList>
       {/* // Todo: create seperate compoenent for imageList and imageItems end */}
