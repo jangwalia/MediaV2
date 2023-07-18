@@ -9,7 +9,7 @@ import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import SearchIcon from "@mui/icons-material/Search";
-import Modal from "@mui/material/Modal";
+import ZoomImage from "./components/ZoomImage";
 import Menu from "@mui/material/Menu";
 import MenuList from "@mui/material/MenuList";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -31,31 +31,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const MAX_FILES = 5;
 
-const ZoomImage = (props: any) => {
-  return (
-    <Modal
-      open={props.open}
-      onClose={props.handleClose}
-      aria-labelledby="image zoonm"
-      aria-describedby="full view of the image"
-    >
-      <div className="tw-flex tw-h-screen tw-justify-center tw-items-center">
-        <div className="tw-relative tw-flex tw-w-[60%] tw-justify-center tw-items-center tw-bg-white tw-p-10 tw-m-5">
-          <img className="tw-w-[70%]" src={props.image} />
-          <div className="tw-absolute tw-right-0 tw-top-0">
-            <IconButton
-              onClick={() => {
-                props.handleClose();
-              }}
-            >
-              <CloseIcon fontSize="large" />
-            </IconButton>
-          </div>
-        </div>
-      </div>
-    </Modal>
-  );
-};
+
 
 const S3FileManagerComponent = (props: any) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
