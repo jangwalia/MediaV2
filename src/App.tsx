@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// App.tsx
 
-function App() {
+import React, { useState } from "react";
+import S3FileManagerComponent from "./S3MediaManager";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const bucketConfigurations: any = {
+  // Private has nothing default
+  Private: {
+    bucket: "tonyimagesprivate",
+    region: "us-west-2",
+    canUpdate: true,
+    canUpload: true,
+    canDelete: true,
+    canCreateFolder: true,
+  },
+  // Public has the ST imates
+  Public: {
+    bucket: "tonyimagespublic",
+    region: "us-west-2",
+    canUpdate: false,
+    canUpload: false,
+    canDelete: false,
+    canCreateFolder: false,
+  },
+};
+
+const App: React.FC = () => {
+  const [selectedImage, setSelectedImage] = useState<string>("");
+  console.log("selected image", selectedImage);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <S3FileManagerComponent
+        image={selectedImage}
+        selectImage={setSelectedImage}
+        buckets={bucketConfigurations}
+      />
+      {/* @ts-expect-error */}
+      <ToastContainer />
     </div>
   );
-}
+};
 
 export default App;
