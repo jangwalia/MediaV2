@@ -1,3 +1,7 @@
+//dot env
+
+import dotenv from "dotenv";
+
 // S3FileManager.ts
 
 import {
@@ -9,6 +13,7 @@ import {
   paginateListObjectsV2,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+
 
 interface File {
   key: string;
@@ -29,8 +34,9 @@ interface ListResult {
 }
 
 // for testing add keys here
-const accessKeyId = "AKIA3HG3HY27BBJMUTQW";
-const secretAccessKey = "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";
+const accessKeyId = process.env.REACT_APP_AWS_ACCESS_KEY_ID ?? "";
+const secretAccessKey = process.env.REACT_APP_AWS_SECRET_ACCESS_KEY ?? "";
+
 
 export default class S3FileManager {
   private s3Client: S3Client;
