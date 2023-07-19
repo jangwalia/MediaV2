@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import TextField from "@mui/material/TextField";
+
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
@@ -11,12 +11,8 @@ import FileCopyIcon from "@mui/icons-material/FileCopy";
 
 import ZoomImage from "./components/ZoomImage";
 
-import LoadingButton from "@mui/lab/LoadingButton";
-
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
-import CloseIcon from "@mui/icons-material/CancelOutlined";
 
-import DeleteIcon from "@mui/icons-material/Delete";
 import { useDropzone } from "react-dropzone";
 import S3FileManager from "./S3FileManager"; // Path to your S3FileManager class
 
@@ -32,6 +28,7 @@ import AddImageButton from "./components/AddImage";
 import AddImageOptions from "./components/AddImageOptions";
 import NewFolder from "./components/FileManagerActions/NewFolder";
 import SearchImage from "./components/FileManagerActions/SearchImage";
+import DeleteImage from "./components/FileManagerActions/DeleteImage";
 
 const MAX_FILES = 5;
 
@@ -323,14 +320,13 @@ const S3FileManagerComponent = (props: any) => {
         />
       )}
       {showSearch && (
-
-        <SearchImage onClick={() => setShowSearch(false)}
+        <SearchImage
+          onClick={() => setShowSearch(false)}
           searchTerm={searchTerm}
           searching={searching}
           search={search}
           setSearchTerm={setSearchTerm}
         />
-
       )}
       {/* // TODO: create seperate compoenent for imageList and imageItems start */}
       <ImageList
@@ -385,12 +381,10 @@ const S3FileManagerComponent = (props: any) => {
                       </IconButton>
                     </>
                   )}
-                  <IconButton
-                    aria-label={`delete file ${file.key}`}
+                  <DeleteImage
                     onClick={() => deleteFile(file.key)}
-                  >
-                    <DeleteIcon style={{ color: "#FFF" }} />
-                  </IconButton>
+                    file={file}
+                  />
                 </div>
               }
             />
