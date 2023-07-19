@@ -295,10 +295,8 @@ const S3FileManagerComponent = (props: any) => {
         <UploadImage
           uploadRootProps={getRootProps}
           uploadInputProps={getInputProps}
-          onClick={() => {
-            setShowUpload(false);
-            setUploadFiles([]);
-          }}
+          setShowUpload={setShowUpload}
+          setUploadFiles={setUploadFiles}
           MAX_FILES={MAX_FILES}
           uploadFiles={uploadFiles}
         />
