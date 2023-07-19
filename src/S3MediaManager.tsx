@@ -251,7 +251,7 @@ const S3FileManagerComponent = (props: any) => {
       <div className="tw-my-6 tw-w-auto">
         <SharedImagesButton
           selected={selectedButton === "Public"}
-          onClick={() => switchBucket("Public")}
+          switchBucket={switchBucket}
         />
         <PrivateImagesButton
           selected={selectedButton === "Private"}

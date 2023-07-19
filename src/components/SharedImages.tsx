@@ -3,16 +3,16 @@ import Button from '@mui/material/Button';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 
 type SharedImagesButtonProps = {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  switchBucket: (type: string) => void;
   selected: boolean;
 };
 
-const SharedImagesButton = ({ onClick,selected }: SharedImagesButtonProps) => {
+const SharedImagesButton = ({ switchBucket,selected }: SharedImagesButtonProps) => {
   return (
     <Button
       startIcon={<FolderOpenIcon />}
       color="primary"
-      onClick={onClick}
+      onClick={() => switchBucket("Public")}
       disabled={selected}
     >
       Shared Images
