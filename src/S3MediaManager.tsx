@@ -2,16 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import FileCopyIcon from "@mui/icons-material/FileCopy";
 
 import ZoomImage from "./components/ZoomImage";
-
-import ZoomInIcon from "@mui/icons-material/ZoomIn";
 
 import { useDropzone } from "react-dropzone";
 import S3FileManager from "./S3FileManager"; // Path to your S3FileManager class
@@ -28,7 +20,8 @@ import AddImageButton from "./components/AddImage";
 import AddImageOptions from "./components/AddImageOptions";
 import NewFolder from "./components/FileManagerActions/NewFolder";
 import SearchImage from "./components/FileManagerActions/SearchImage";
-import DeleteImage from "./components/FileManagerActions/DeleteImage";
+
+import ImageListSection from "./components/ImagesSection/ImagesList";
 
 const MAX_FILES = 5;
 
@@ -328,70 +321,23 @@ const S3FileManagerComponent = (props: any) => {
           setSearchTerm={setSearchTerm}
         />
       )}
-      {/* // TODO: create seperate compoenent for imageList and imageItems start */}
-      <ImageList
-        gap={12}
-        sx={{
-          gridTemplateColumns:
-            "repeat(auto-fill, minmax(280px, 1fr))!important",
+
+      <ImageListSection
+        items={[...folders, ...files]}
+        selectImage={(key: string) => {
+          if (key.endsWith("/")) {
+            navigateToFolder(key);
+          } else {
+            props.selectImage(key);
+          }
         }}
-      >
-        {[...folders, ...files].map((file: any, index: number) => (
-          <ImageListItem
-            key={index}
-            sx={{
-              border: props.image === file.key ? 4 : 0,
-              borderColor: "blue",
-            }}
-            onClick={() => {
-              if (file.key.endsWith("/")) {
-                navigateToFolder(file.key);
-              } else {
-                props.selectImage(file.key);
-              }
-            }}
-          >
-            <img
-              className="tw-aspect-square"
-              src={file.url}
-              alt={file.key}
-              loading="lazy"
-            />
-            <ImageListItemBar
-              title={file.key}
-              subtitle={<span>size: {file.size / 1000} KB</span>}
-              actionIcon={
-                <div className="tw-flex">
-                  {!file.key.endsWith("/") && (
-                    <>
-                      <IconButton
-                        aria-label={`info about ${file.key}`}
-                        onClick={() => copyUrl(file.url)}
-                      >
-                        <FileCopyIcon style={{ color: "#FFF" }} />
-                      </IconButton>
-                      <IconButton
-                        aria-label={`zoom in ${file.key}`}
-                        onClick={() => {
-                          setSelectedImage(file.url);
-                          setImageZoom(true);
-                        }}
-                      >
-                        <ZoomInIcon style={{ color: "#FFF" }} />
-                      </IconButton>
-                    </>
-                  )}
-                  <DeleteImage
-                    onClick={() => deleteFile(file.key)}
-                    file={file}
-                  />
-                </div>
-              }
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
-      {/* // Todo: create seperate compoenent for imageList and imageItems end */}
+        deleteImage={(key: string) => deleteFile(key)}
+        selectedImage={props.image}
+        copyUrl={(url: string) => copyUrl(url)}
+        setSelectedImage={(url: string) => setSelectedImage(url)}
+        setImageZoom={(value: boolean) => setImageZoom(value)}
+      />
+
       <ZoomImage
         open={imageZoom}
         handleClose={handleImageZoomClose}
