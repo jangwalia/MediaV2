@@ -31,6 +31,7 @@ import SearchImageButton from "./components/SearchImage";
 import AddImageButton from "./components/AddImage";
 import AddImageOptions from "./components/AddImageOptions";
 import NewFolder from "./components/FileManagerActions/NewFolder";
+import SearchImage from "./components/FileManagerActions/SearchImage";
 
 const MAX_FILES = 5;
 
@@ -322,29 +323,14 @@ const S3FileManagerComponent = (props: any) => {
         />
       )}
       {showSearch && (
-        <div className="tw-relative tw-w-full tw-h-40 tw-m-5 tw-flex tw-justify-center tw-border-dashed tw-border-2">
-          <div className="tw-flex tw-justify-center tw-items-center tw-px-10 tw-space-x-5">
-            <TextField
-              label="Search Term"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <LoadingButton
-              variant="contained"
-              color="primary"
-              disabled={searchTerm.length === 0}
-              loading={searching}
-              onClick={search}
-            >
-              Search
-            </LoadingButton>
-          </div>
-          <div className="tw-absolute tw-right-0">
-            <IconButton onClick={() => setShowSearch(false)}>
-              <CloseIcon fontSize="large" />
-            </IconButton>
-          </div>
-        </div>
+
+        <SearchImage onClick={() => setShowSearch(false)}
+          searchTerm={searchTerm}
+          searching={searching}
+          search={search}
+          setSearchTerm={setSearchTerm}
+        />
+
       )}
       {/* // TODO: create seperate compoenent for imageList and imageItems start */}
       <ImageList
