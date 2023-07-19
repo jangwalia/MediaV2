@@ -30,6 +30,7 @@ import NavigationSection from "./components/NavigationSection";
 import SearchImageButton from "./components/SearchImage";
 import AddImageButton from "./components/AddImage";
 import AddImageOptions from "./components/AddImageOptions";
+import NewFolder from "./components/FileManagerActions/NewFolder";
 
 const MAX_FILES = 5;
 
@@ -300,36 +301,25 @@ const S3FileManagerComponent = (props: any) => {
       {bucketConfig.canUpdate && showUpload && (
         // {bucketConfig.canCreateFolder && (
 
-        <UploadImage uploadRootProps={getRootProps} uploadInputProps={getInputProps} onClick={() => {
-          setShowUpload(false);
-          setUploadFiles([]);
-        }} MAX_FILES={MAX_FILES} uploadFiles={uploadFiles} />
-
+        <UploadImage
+          uploadRootProps={getRootProps}
+          uploadInputProps={getInputProps}
+          onClick={() => {
+            setShowUpload(false);
+            setUploadFiles([]);
+          }}
+          MAX_FILES={MAX_FILES}
+          uploadFiles={uploadFiles}
+        />
       )}
       {bucketConfig.canUpdate && showCreateFolder && (
-        <div className="tw-relative tw-w-full tw-h-40 tw-m-5 tw-flex tw-justify-center tw-border-dashed tw-border-2">
-          <div className="tw-flex tw-justify-center tw-items-center tw-px-10 tw-space-x-5">
-            <TextField
-              label="New folder name"
-              value={newFolderName}
-              onChange={(e) => setNewFolderName(e.target.value)}
-            />
-            <LoadingButton
-              variant="contained"
-              color="primary"
-              disabled={newFolderName.length === 0}
-              loading={creatingFolder}
-              onClick={createFolder}
-            >
-              Create
-            </LoadingButton>
-          </div>
-          <div className="tw-absolute tw-right-0">
-            <IconButton onClick={() => setShowCreateFolder(false)}>
-              <CloseIcon fontSize="large" />
-            </IconButton>
-          </div>
-        </div>
+        <NewFolder
+          onClick={() => setShowCreateFolder(false)}
+          newFolderName={newFolderName}
+          setNewFolderName={setNewFolderName}
+          creatingFolder={creatingFolder}
+          createFolder={createFolder}
+        />
       )}
       {showSearch && (
         <div className="tw-relative tw-w-full tw-h-40 tw-m-5 tw-flex tw-justify-center tw-border-dashed tw-border-2">
